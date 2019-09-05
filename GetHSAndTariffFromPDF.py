@@ -82,25 +82,18 @@ class TariffData2019(TariffData):
                         iterindex += 1
                     self.add_rate(hs_num, pagetext[iterindex])
                     iterindex += 1
-                else:
-                    if len(pagetext[iterindex]) == 4 and self.check_number(pagetext[iterindex + 1][1:]):
-                        if pagetext[iterindex + 1][0] == ".":
-                            hs_num = pagetext[iterindex] + pagetext[iterindex + 1]
+                elif iterindex + 1 != maxiter:
+                    if len(pagetext[iterindex]) + len(pagetext[iterindex + 1]) == 9:
+                        composite = pagetext[iterindex] + pagetext[iterindex + 1]
+                        if self.check_number(composite[:3]) \
+                                and composite[4] == "." \
+                                and self.check_number(composite[5:]):
+                            hs_num = composite
                             iterindex += 2
                             while not self.check_tariff(pagetext[iterindex]):
                                 iterindex += 1
                             self.add_rate(hs_num, pagetext[iterindex])
-                    elif len(pagetext[iterindex]) == 5 and self.check_number(pagetext[iterindex + 1][1:]):
-                        if pagetext[iterindex][-1] == ".":
-                            hs_num = pagetext[iterindex] + pagetext[iterindex + 1]
-                            iterindex += 2
-                            try:
-                                while not self.check_tariff(pagetext[iterindex]):
-                                    iterindex += 1
-                                self.add_rate(hs_num, pagetext[iterindex])
-                            except:
-                                print("Prob")
-                    iterindex += 1
+                iterindex += 1
         return self._rate_data
 
 file18 = pypdf.PdfFileReader("2018_baserates.pdf")
