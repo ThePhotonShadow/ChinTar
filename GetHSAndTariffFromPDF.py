@@ -90,6 +90,16 @@ class TariffData2019(TariffData):
                             while not self.check_tariff(pagetext[iterindex]):
                                 iterindex += 1
                             self.add_rate(hs_num, pagetext[iterindex])
+                    elif len(pagetext[iterindex]) == 5 and self.check_number(pagetext[iterindex + 1][1:]):
+                        if pagetext[iterindex][-1] == ".":
+                            hs_num = pagetext[iterindex] + pagetext[iterindex + 1]
+                            iterindex += 2
+                            try:
+                                while not self.check_tariff(pagetext[iterindex]):
+                                    iterindex += 1
+                                self.add_rate(hs_num, pagetext[iterindex])
+                            except:
+                                print("Prob")
                     iterindex += 1
         return self._rate_data
 
