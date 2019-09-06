@@ -1,4 +1,5 @@
 import PyPDF2 as pypdf
+import numpy as np
 import pandas as pd
 
 class TariffData:
@@ -155,9 +156,13 @@ print("fixed18 " + str(len(fixed_18)))
 print(len(missing))
 print(missing)
 
-fincount = 0
-for item in missing:
-    if len(item) < 9:
-        fincount += 1
+vals2019 = list(map(lambda x: float(x), list(data_dict19.values())))
+print(vals2019)
+stddev2019 = float(np.std(vals2019))
+avg2019 = float(np.average(vals2019))
 
-print(fincount)
+for item in data_dict19.keys():
+    if float(data_dict19[item]) - avg2019 > (2 * stddev2019):
+        print(str(item) + ", " + data_dict19[item])
+
+correct = []
