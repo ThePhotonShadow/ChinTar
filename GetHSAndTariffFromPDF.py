@@ -162,7 +162,12 @@ stddev2019 = float(np.std(vals2019))
 avg2019 = float(np.average(vals2019))
 
 for item in data_dict19.keys():
-    if float(data_dict19[item]) - avg2019 > (2 * stddev2019):
+    if float(data_dict19[item]) - avg2019 > (stddev2019):
         print(str(item) + ", " + data_dict19[item])
+
+
+for item in data_dict19.keys():
+    if float(data_dict19[item]) > 101.0:
+        print("----> " + str(item) + ", " + data_dict19[item])
 
 correct = []
